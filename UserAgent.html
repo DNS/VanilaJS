@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Untitled 1</title>
+<script type="text/javascript">
+
+//Because when the script executes the browser has not yet parsed the <body>, so it does not know that there is an element with the specified id.
+window.onload = function(){
+	document.getElementById('here1').innerHTML = navigator.userAgent;	// innerText
+	document.getElementById('here2').value = navigator.userAgent;
+	//window.alert(document.getElementById('here1').innerText);
+
+};
+
+
+//document.getElementById('here1')
+
+//window.alert(navigator.userAgent);
+
+</script>
+
+</head>
+
+<body>
+<div id="here1">Here1 <p>OK</p> 123</div>
+
+<input type="text" id="here2" value="value2" />
+
+</body>
+
+
+
+</html>
+
+
+
+
+
+
+
+

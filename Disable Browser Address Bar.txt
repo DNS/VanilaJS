@@ -1,0 +1,16 @@
+> Chrome
+Chrome.exe --app="http://www.bing.com"
+
+> Firefox
+# Type about:config in the address bar, the search for:
+dom.disable_window_open_feature.location = false
+
+# or change "User.js" file
+user_pref("dom.disable_window_open_feature.location","false");
+
+# or load profile from specified path with already modified preferences
+Firefox.exe -profile "path/to/profile"
+
+Note: On Mac OS X specifying a relative path is not supported anymore from Firefox 4.0 and up due to a regression
+
+
