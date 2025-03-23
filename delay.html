@@ -12,16 +12,13 @@
 
 
 <script language="javascript" type="text/javascript">
-	//window.alert('Hello World!');
 	var count = 0;
-	
-	
-	//document.getElementById('here1').innerHTML = 'Clicked !!!';
 	
 	function test () {
 		count++;
-		document.getElementById('here1').innerHTML = 'Waiting...;
-				
+		document.getElementById('here1').innerHTML = 'Waiting...';
+		
+		// delay 1500 millisecond
 		setTimeout(() => {
 			document.getElementById('here1').innerHTML = 'Clicked: ' + count;
 		}, 1500);
