@@ -7,19 +7,19 @@
 <body>
 
 	<h2>Weather</h2>
-	<div id="weather-container">Loading data...</div>
+	<div id="weather">Loading data...</div>
 
 	<hr />
 
 	<h2>IP Location</h2>
-	<div id="iplocation-container">Loading data...</div>
+	<div id="iplocation">Loading data...</div>
 
 	<script>
 		const latitude  = '-6.175096228258444';
 		const longitude = '106.82788563400537';
 
 		async function loadWeather() {
-			const displayDiv = document.getElementById('weather-container');
+			const weather_div = document.getElementById('weather');
 			
 			try {
 				// Fetching data from a free public REST API
@@ -34,7 +34,7 @@
 				const data = await response.json();
 
 				// Display the specific pieces of data inside the div
-				displayDiv.innerHTML = `
+				weather_div.innerHTML = `
 					<div><strong>Time:</strong> ${data.current_weather.time}</div>
 					<div><strong>Temperature:</strong> ${data.current_weather.temperature}</div>
 					<div><strong>Windspeed:</strong> ${data.current_weather.windspeed}</div>
@@ -46,12 +46,12 @@
 			} catch (error) {
 				// Handle any errors (network issues, 404s, etc.)
 				console.error('Fetch error:', error);
-				displayDiv.innerHTML = 'Failed to get weather data.';
+				weather_div.innerHTML = 'Failed to get weather data.';
 			}
 		}
 
 		async function loadIPlocation() {
-			const displayDiv = document.getElementById('iplocation-container');
+			const iplocation_div = document.getElementById('iplocation');
 			
 			try {
 				// Fetching data from a free public REST API
@@ -72,14 +72,14 @@
 				const ua_json = await user_agent.json();
 
 				// Display the specific pieces of data inside the div
-				displayDiv.innerHTML = `
+				iplocation_div.innerHTML = `
 					<div><strong>IP Location:</strong> ${ip_location_json.location.lat}, ${ip_location_json.location.lng}</div>
 					<div><strong>User Agent:</strong> ${ua_json.ua}</div>
 				`;
 			} catch (error) {
 				// Handle any errors (network issues, 404s, etc.)
 				console.error('Fetch error:', error);
-				displayDiv.innerHTML = 'Failed to get IP location data.';
+				iplocation_div.innerHTML = 'Failed to get IP location data.';
 			}
 		}
 
