@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Weather API</title>
+</head>
+<body>
+
+	<h2>Weather</h2>
+	<div id="weather-container">Loading data...</div>
+
+	<hr />
+
+	<h2>IP Location</h2>
+	<div id="iplocation-container">Loading data...</div>
+
+	<script>
+		const latitude  = '-6.175096228258444';
+		const longitude = '106.82788563400537';
+
+		async function loadWeather() {
+			const displayDiv = document.getElementById('weather-container');
+			
+			try {
+				// Fetching data from a free public REST API
+				const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
+				
+				// Check if the response is successful (status 200-299)
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+
+				// Parse the JSON body of the response
+				const data = await response.json();
+
+				// Display the specific pieces of data inside the div
+				displayDiv.innerHTML = `
+					<div><strong>Time:</strong> ${data.current_weather.time}</div>
+					<div><strong>Temperature:</strong> ${data.current_weather.temperature}</div>
+					<div><strong>Windspeed:</strong> ${data.current_weather.windspeed}</div>
+					<div><strong>Wind Direction:</strong> ${data.current_weather.winddirection}</div>
+					<div><strong>Latitude:</strong> ${data.latitude}</div>
+					<div><strong>Longitude:</strong> ${data.longitude}</div>
+					<div><strong>Elevation:</strong> ${data.elevation}</div>
+				`;
+			} catch (error) {
+				// Handle any errors (network issues, 404s, etc.)
+				console.error('Fetch error:', error);
+				displayDiv.innerHTML = 'Failed to get weather data.';
+			}
+		}
+
+		async function loadIPlocation() {
+			const displayDiv = document.getElementById('iplocation-container');
+			
+			try {
+				// Fetching data from a free public REST API
+				const ip_location = await fetch('https://ip.app/whereami?format=json');
+				const user_agent = await fetch('https://ip.app/ua?format=json');
+				
+				// Check if the response is successful (status 200-299)
+				if (!ip_location.ok) {
+					throw new Error(`HTTP error! status: ${ip_location.status}`);
+				}
+
+				if (!user_agent.ok) {
+					throw new Error(`HTTP error! status: ${user_agent.status}`);
+				}
+
+				// Parse the JSON body of the response
+				const ip_location_json = await ip_location.json();
+				const ua_json = await user_agent.json();
+
+				// Display the specific pieces of data inside the div
+				displayDiv.innerHTML = `
+					<div><strong>IP Location:</strong> ${ip_location_json.location.lat}, ${ip_location_json.location.lng}</div>
+					<div><strong>User Agent:</strong> ${ua_json.ua}</div>
+				`;
+			} catch (error) {
+				// Handle any errors (network issues, 404s, etc.)
+				console.error('Fetch error:', error);
+				displayDiv.innerHTML = 'Failed to get IP location data.';
+			}
+		}
+
+		// Call the function immediately when the script loads
+		loadWeather();
+		loadIPlocation();
+	</script>
+
+</body>
+</html>
+
+<!--
+html with embedded javascript, write fetch example to fetch rest and display it to div tag
+
+--------------------------
+
+
+Public Free API: https://publicapis.io/
+
+
+-6.175096228258444, 106.82788563400537
+
+
+
+--------------------------
+
+PS D:\Downloads> $a = irm 'https://api.open-meteo.com/v1/forecast?latitude=-6.175096228258444&longitude=106.82788563400537&current_weather=true'
+PS D:\Downloads> $a
+
+latitude              : -6.151142
+longitude             : 106.8421
+generationtime_ms     : 0.141024589538574
+utc_offset_seconds    : 0
+timezone              : GMT
+timezone_abbreviation : GMT
+elevation             : 7
+current_weather_units : @{time=iso8601; interval=seconds; temperature=°C; windspeed=km/h; winddirection=°; is_day=; weathercode=wmo code}
+current_weather       : @{time=2026-08-21T07:45; interval=900; temperature=32.2; windspeed=16.4; winddirection=32; is_day=1; weathercode=0}
+
+PS D:\Downloads> $a.current_weather
+
+time          : 2026-08-21T07:45
+interval      : 900
+temperature   : 32.2
+windspeed     : 16.4
+winddirection : 32
+is_day        : 1
+weathercode   : 0
+
+PS D:\Downloads>
+
+
+--------------------------
+
+irm 'ip.app/?whereami=json'
+irm 'ip.app/?ua=json'
+
+
+
+-->
+
